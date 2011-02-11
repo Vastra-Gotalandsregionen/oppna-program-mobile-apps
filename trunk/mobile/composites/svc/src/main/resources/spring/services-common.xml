@@ -24,7 +24,14 @@
                            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:component-scan base-package="se.vgregion.mobile.repository.inmemory" />
-	<context:component-scan base-package="se.vgregion.mobile.services" />
+	
+	<bean class="se.vgregion.mobile.services.DefaultPrinterService" />
+	<bean class="se.vgregion.mobile.services.SystemOutErrorReportService" />
+	
+	
+	<bean class="se.vgregion.mobile.services.DemoData" />
+	
+	<context:annotation-config />
 
 	<tx:annotation-driven />
 

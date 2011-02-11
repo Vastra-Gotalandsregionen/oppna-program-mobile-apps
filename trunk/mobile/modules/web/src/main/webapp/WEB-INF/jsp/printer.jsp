@@ -12,68 +12,70 @@
 		<script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<script>
+		
+		$(function() {
+			$('#first').bind('pagehide',function(event, ui){
+  				$("#notice").hide();
+			});
+		})
+		
+		</script>
 
 	</head>
 <body> 
 
-<div id="first" data-role="page">
+<div id="first" data-role="page" data-theme="b">
 
 	<div data-role="header" data-theme="b">
 		<h1>${printer.name}</h1>
 	</div>
 
-	<div data-role="content" data-theme="b">	
+	<div data-role="content" data-theme="b">
+		<div id="notice">
+			<c:if test="${!empty notice}">
+				<p>${notice}</p>
+			</c:if>
+		</div>
+		
 		<p><a href="#info">Information</a></p>
 		<p><a href="#help">Hjälp</a></p>
 		<p><a href="#report">Felanmäl</a></p>
 	</div>
+</div>
 
-	<div data-role="footer" class="ui-bar" data-position="fixed" data-id="menu" data-theme="b">
-		<a href="index.html" data-role="button" data-icon="delete">Konferensrum</a>
+<div id="info" data-role="page" data-theme="b">
+
+	<div data-role="header" data-theme="b">
+		<h1>${printer.name} - information</h1>
+	</div>
+
+	<div data-role="content" data-theme="b">	
+		<p>${printer.information}</p>		
 	</div>
 </div>
 
-<div id="info" data-role="page">
+<div id="help" data-role="page" data-theme="b">
 
-	<div data-role="header">
-		<h1>Information om ${printer.name}</h1>
+	<div data-role="header" data-theme="b">
+		<h1>${printer.name} - hjälp</h1>
 	</div>
 
-	<div data-role="content">	
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum lacinia faucibus. Donec scelerisque nulla at turpis sagittis facilisis sed nec mi. Donec iaculis tincidunt varius. Vestibulum placerat lacus quis urna iaculis vitae scelerisque arcu fermentum. Integer consectetur enim sed purus laoreet sollicitudin sit amet vel libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vitae ipsum a diam eleifend interdum a ac justo. In in erat in neque semper cursus sit amet non sem. </p>		
-	</div>
-
-	<div data-role="footer" class="ui-bar" data-position="fixed" data-id="menu">
-		<a href="index.html" data-role="button" data-icon="delete">Skrivare</a>
-		<a href="index.html" data-role="button" data-icon="delete">Konferensrum</a>
-	</div>
-</div>
-
-<div id="help" data-role="page">
-
-	<div data-role="header">
-		<h1>Hjälp för ${printer.name}</h1>
-	</div>
-
-	<div data-role="content">	
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum lacinia faucibus. Donec scelerisque nulla at turpis sagittis facilisis sed nec mi. Donec iaculis tincidunt varius. Vestibulum placerat lacus quis urna iaculis vitae scelerisque arcu fermentum. Integer consectetur enim sed purus laoreet sollicitudin sit amet vel libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vitae ipsum a diam eleifend interdum a ac justo. In in erat in neque semper cursus sit amet non sem. </p>		
-	</div>
-
-	<div data-role="footer" class="ui-bar" data-position="fixed" data-id="menu">
-		<a href="index.html" data-role="button" data-icon="delete">Skrivare</a>
-		<a href="index.html" data-role="button" data-icon="delete">Konferensrum</a>
+	<div data-role="content" data-theme="b">	
+		<p>${printer.help}</p>		
 	</div>
 
 </div>
 
-<div id="report" data-role="page">
+<div id="report" data-role="page" data-theme="b">
 
-	<div data-role="header">
-		<h1>Felanmäl ${printer.name}</h1>
+	<div data-role="header" data-theme="b">
+		<h1>${printer.name} - felanmäl</h1>
 	</div>
 
-	<div data-role="content">	
-		<form action=".">
+	<div data-role="content" data-theme="b">	
+		<form action="${pageContext.request.contextPath}/printer/${printer.id}/report" method="POST">
 
 		    <p><label for="error">Beskrivning av fel</label><textarea name="error" id="error"></textarea></p>
 		    <p><label for="reporter">Ditt VGRid (valfri)</label><input name="reporter" id="reporter"></p>
@@ -81,10 +83,6 @@
 		        <div class="ui-block-a"><input type="submit" value="Skicka"></div>
 		        <div class="ui-block-b"><input type="button" value="Avbryt"></div>
 		    </div>
-	</div>
-
-	<div data-role="footer">
-		<h4>Page Footer</h4>
 	</div>
 </div>
 

@@ -22,11 +22,19 @@ package se.vgregion.mobile.controllers;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.vgregion.mobile.services.PrinterService;
+import se.vgregion.mobile.types.Printer;
 
 
 public class AdminGuiControllerTest {
@@ -35,9 +43,21 @@ public class AdminGuiControllerTest {
     
     @Test
     public void index() throws IOException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        
+        Printer p1 = new Printer("p1", "help", "info");
+        List<Printer> printers = Arrays.asList(p1);
+        
         PrinterService printerService = mock(PrinterService.class);
+        
+        Mockito.when(printerService.findAllPrinters()).thenReturn(printers);
         controller.setPrinterService(printerService);
         
-        ModelAndView mav = controller.index();
+        URI applicationUrl = URI.create("http://example.com");
+        controller.setApplicationUrl(applicationUrl);
+        
+        ModelAndView mav = controller.index(request);
+        Assert.assertEquals(printers, mav.getModel().get("printers"));
+        Assert.assertEquals(applicationUrl, mav.getModel().get("appurl"));
     }
 }

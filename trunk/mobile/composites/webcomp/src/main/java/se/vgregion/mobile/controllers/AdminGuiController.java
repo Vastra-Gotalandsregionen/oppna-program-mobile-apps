@@ -20,6 +20,7 @@
 package se.vgregion.mobile.controllers;
 
 import java.io.IOException;
+import java.net.URI;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,8 @@ public class AdminGuiController {
 
     @Resource
     private PrinterService printerService;
+    
+    private URI applicationUrl;
 
     
     public AdminGuiController() {
@@ -51,50 +54,33 @@ public class AdminGuiController {
     }
 
     @RequestMapping(value="/admin", method=RequestMethod.GET)
-    public ModelAndView index() throws IOException {
+    public ModelAndView index(HttpServletRequest request) throws IOException {
         ModelAndView mav = new ModelAndView("admin/index");
         
+        mav.addObject("appurl", getApplicationUrl(request));
         mav.addObject("printers", printerService.findAllPrinters());
-//        mav.addObject("staticRedirects", printerService.findAllStaticRedirects());
-//        mav.addObject("applications", printerService.findAllApplications());
         
         return mav;
+    }
+    
+    private URI getApplicationUrl(HttpServletRequest request) {
+        if(applicationUrl != null) {
+            return applicationUrl;
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(request.getScheme());
+            sb.append("://");
+            sb.append(request.getServerName());
+            if(request.getServerPort() > 0) {
+                sb.append(":");
+                sb.append(request.getServerPort());
+            }
+            sb.append(request.getContextPath());
+            
+            return URI.create(sb.toString());
+        }
     }
 
-    @RequestMapping(value="/admin/redirectrules", method=RequestMethod.POST)
-    public ModelAndView updateRedirectRules(HttpServletRequest request) throws IOException {
-        ModelAndView mav = new ModelAndView("redirect:../admin");
-        
-//        if(request.getParameter("add") != null) {
-//            // adding a new rule
-//            String domain = request.getParameter("domain");
-//            if(StringUtils.isEmpty(domain)) {
-//                domain = null;
-//            }
-//            String pattern = request.getParameter("pattern");
-//            URI url = URI.create(request.getParameter("url"));
-//
-//            if(StringUtils.isNotEmpty(pattern)) {
-//                log.debug("Adding redirect rule with pattern \"{}\" and URL \"{}\"", pattern, url);
-//                try { 
-//                    printerService.createRedirectRule(new RedirectRule(domain, pattern, url));
-//                } catch(RuntimeException e) {
-//                    throw e;
-//                }
-//            } else {
-//                // handle validation error
-//                System.out.println("Validation error");
-//            }
-//        } else {
-//            UUID deletedId = findDeletedId(request);
-//            if(deletedId != null) {
-//                log.debug("Deleting redirect rule {}", deletedId);
-//                printerService.removeRedirectRule(deletedId);
-//            }
-//        }
-        
-        return mav;
-    }
 
     public PrinterService getPrinterService() {
         return printerService;
@@ -104,19 +90,11 @@ public class AdminGuiController {
         this.printerService = printerService;
     }
 
+    public URI getApplicationUrl() {
+        return applicationUrl;
+    }
 
-    
-//    private UUID findDeletedId(HttpServletRequest request) {
-//        Enumeration names = request.getParameterNames();
-//        while(names.hasMoreElements()) {
-//            String name = (String) names.nextElement();
-//            if(name.startsWith("delete-")) {
-//                return UUID.fromString(name.substring(7));
-//            }
-//        }
-//        
-//        return null;
-//    }
-
-    
+    public void setApplicationUrl(URI applicationUrl) {
+        this.applicationUrl = applicationUrl;
+    }
 }

@@ -30,9 +30,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import se.vgregion.mobile.services.ErrorReportService;
 import se.vgregion.mobile.services.PrinterService;
+import se.vgregion.mobile.types.ErrorReport;
+import se.vgregion.mobile.types.Printer;
 
 /**
  * Controller for showing a basic web GUI for shorting link.
@@ -46,16 +50,36 @@ public class PrinterController {
     @Resource
     private PrinterService printerService;
 
+    @Resource
+    private ErrorReportService errorReportService;
+
     
     public PrinterController() {
         log.info("Created {}", PrinterController.class.getName());
     }
 
     @RequestMapping(value="/printer/{id}", method=RequestMethod.GET)
-    public ModelAndView printer(@PathVariable("id") UUID id) throws IOException {
+    public ModelAndView printer(@PathVariable("id") UUID id, @RequestParam(value="notice", required=false) String notice) throws IOException {
         ModelAndView mav = new ModelAndView("printer");
         
         mav.addObject("printer", printerService.findPrinterById(id));
+        mav.addObject("notice", notice);
+        
+        return mav;
+    }
+
+    @RequestMapping(value="/printer/{id}/report", method=RequestMethod.POST)
+    public ModelAndView report(@PathVariable("id") UUID id, 
+            @RequestParam("error") String errorDescription, 
+            @RequestParam("reporter") String reporter) throws IOException {
+
+        Printer printer = printerService.findPrinterById(id);
+        ErrorReport report = new ErrorReport(printer, reporter, errorDescription);
+        
+        errorReportService.report(report);
+        
+        ModelAndView mav = new ModelAndView("redirect:../" + printer.getId());
+        mav.addObject("notice", "Ditt fel har rapporterats");
         
         return mav;
     }
@@ -67,5 +91,13 @@ public class PrinterController {
 
     public void setPrinterService(PrinterService printerService) {
         this.printerService = printerService;
+    }
+
+    public ErrorReportService getErrorReportService() {
+        return errorReportService;
+    }
+
+    public void setErrorReportService(ErrorReportService errorReportService) {
+        this.errorReportService = errorReportService;
     }
 }

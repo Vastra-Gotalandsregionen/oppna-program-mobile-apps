@@ -17,22 +17,13 @@
  *
  */
 
-package se.vgregion.mobile.types;
+package se.vgregion.mobile.services;
 
-import org.junit.Assert;
-import org.junit.Test;
+import se.vgregion.mobile.types.ErrorReport;
 
 
-public class PrinterTest {
+public interface ErrorReportService {
 
-    @Test
-    public void cstr() {
-        Printer printer = new Printer("n", "h", "i");
-        
-        Assert.assertNotNull(printer.getId());
-        Assert.assertEquals("n", printer.getName());
-        Assert.assertEquals("h", printer.getHelp());
-        Assert.assertEquals("i", printer.getInformation());
-        
-    }
+    void report(ErrorReport report);
+
 }

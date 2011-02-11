@@ -17,22 +17,24 @@
  *
  */
 
-package se.vgregion.mobile.types;
+package se.vgregion.mobile.services;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import se.vgregion.mobile.types.ErrorReport;
 
-public class PrinterTest {
+@Service
+public class SystemOutErrorReportService implements ErrorReportService {
 
-    @Test
-    public void cstr() {
-        Printer printer = new Printer("n", "h", "i");
-        
-        Assert.assertNotNull(printer.getId());
-        Assert.assertEquals("n", printer.getName());
-        Assert.assertEquals("h", printer.getHelp());
-        Assert.assertEquals("i", printer.getInformation());
-        
+    private final Logger log = LoggerFactory.getLogger(SystemOutErrorReportService.class);
+
+    private String body = "Felrapport för skrivare %1s:\n%2s\n\nRapporterat av: %3s";
+    
+    @Override
+    public void report(ErrorReport report) {
+        String text = String.format(body, report.getPrinter().getName(), report.getDescription(), report.getReporter());
+        System.out.println(text);
     }
 }
