@@ -25,41 +25,40 @@ import org.springframework.util.Assert;
 
 import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
-public class Printer extends AbstractEntity<UUID> {
+public class ErrorReport extends AbstractEntity<UUID> {
 
     private UUID id;
     
-    private String name;
+    private Printer printer;
     
-    private String help;
+    private String reporter = "Okänd";
     
-    private String information;
+    private String description;
     
-    public Printer(String name, String help, String information) {
-        Assert.hasText(name);
-        Assert.hasText(help);
-        Assert.hasText(information);
+    public ErrorReport(Printer printer, String reporter, String description) {
+        Assert.notNull(printer);
+        Assert.hasText(description);
 
         this.id = UUID.randomUUID();
-        this.name = name;
-        this.help = help;
-        this.information = information;
+        this.printer= printer;
+        this.reporter = reporter;
+        this.description = description;
     }
 
     @Override
     public UUID getId() {
         return id;
     }
-    
-    public String getName() {
-        return name;
+
+    public Printer getPrinter() {
+        return printer;
     }
 
-    public String getHelp() {
-        return help;
+    public String getReporter() {
+        return reporter;
     }
 
-    public String getInformation() {
-        return information;
+    public String getDescription() {
+        return description;
     }
 }

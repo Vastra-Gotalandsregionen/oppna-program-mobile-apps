@@ -23,11 +23,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class PrinterTest {
+public class ErrorReportTest {
 
     @Test
     public void cstr() {
         Printer printer = new Printer("n", "h", "i");
+        ErrorReport report = new ErrorReport(printer, "user", "desc");
         
         Assert.assertNotNull(printer.getId());
         Assert.assertEquals("n", printer.getName());

@@ -30,14 +30,16 @@ import se.vgregion.mobile.types.Printer;
 @Service
 public class DemoData {
 
+    private static final String LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum lacinia faucibus. Donec scelerisque nulla at turpis sagittis facilisis sed nec mi. Donec iaculis tincidunt varius. Vestibulum placerat lacus quis urna iaculis vitae scelerisque arcu fermentum. Integer consectetur enim sed purus laoreet sollicitudin sit amet vel libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vitae ipsum a diam eleifend interdum a ac justo. In in erat in neque semper cursus sit amet non sem.";
+    
     @Resource
     private PrinterRepository printerRepository;
     
     @PostConstruct
     public void init() {
-        printerRepository.persist(new Printer("HP 700A"));
-        printerRepository.persist(new Printer("HP 700B"));
-        printerRepository.persist(new Printer("HP 700C"));
+        printerRepository.persist(new Printer("HP 700A", LOREM_IPSUM, LOREM_IPSUM));
+        printerRepository.persist(new Printer("HP 700B", LOREM_IPSUM, LOREM_IPSUM));
+        printerRepository.persist(new Printer("HP 700C", LOREM_IPSUM, LOREM_IPSUM));
     }
     
 }

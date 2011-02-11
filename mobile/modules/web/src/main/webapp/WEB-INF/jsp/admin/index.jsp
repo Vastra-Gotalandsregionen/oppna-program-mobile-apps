@@ -31,8 +31,8 @@
 				<c:forEach var="printer" items="${printers}">
 					<tr>
 						<td>${printer.name}</td>
-						<td><a href="http://localhost:8080/printer/${printer.id}">Visa</a></td>
-						<td><a href="http://localhost:8080/qr?url=http://localhost:8080/printer/${printer.id}">QR</a></td>
+						<td><a href="${pageContext.request.contextPath}/printer/${printer.id}">Visa</a></td>
+						<td><a href="${pageContext.request.contextPath}/qr?url=${appurl}/printer/${printer.id}">QR</a></td>
 					</tr>
 				</c:forEach>
 					<tr>

@@ -38,7 +38,7 @@ public class JpaPrinterRepositoryTest extends AbstractJUnit4SpringContextTests {
     @Before
     public void setup() {
         dao = applicationContext.getBean(PrinterRepository.class);
-        user1 = new Printer("SE123-123");
+        user1 = new Printer("SE123-123", "help", "info");
         dao.persist(user1);
         dao.flush();
     }
