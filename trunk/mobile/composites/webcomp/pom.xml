@@ -25,6 +25,7 @@
 					<include>**/*.css</include>
 					<include>**/*.js</include>
 					<include>**/*.png</include>
+					<include>**/*.gif</include>
 				</includes>
 			</resource>
 		</resources>

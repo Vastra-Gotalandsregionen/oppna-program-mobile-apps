@@ -27,6 +27,7 @@
 	
 	<bean class="se.vgregion.mobile.services.DefaultPrinterService" />
 	<bean class="se.vgregion.mobile.services.SystemOutErrorReportService" />
+	<bean class="se.vgregion.mobile.services.DefaultFacilityService" />
 	
 	
 	<bean class="se.vgregion.mobile.services.DemoData" />
