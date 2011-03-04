@@ -26,6 +26,8 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         ">
 
+	<mvc:resources mapping="/resources/**" location="classpath:/META-INF/"/>
+
 	<mvc:annotation-driven/>
 
 	<context:component-scan base-package="se.vgregion.mobile.controllers" />
