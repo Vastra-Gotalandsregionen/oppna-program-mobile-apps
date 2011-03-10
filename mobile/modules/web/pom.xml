@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
-	<!--
-		This is the Web-app Maven POM. Template version: 1.4 Generation time :
-		2010-09-14 14:37:13 CEST
-	-->
+<!-- This is the Web-app Maven POM. Template version: 1.4 Generation time 
+	: 2010-09-14 14:37:13 CEST -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -21,10 +19,8 @@
 		<finalName>mobile-${project.version}</finalName>
 		<plugins>
 			<plugin>
-				<!--
-					Configure eclipse plug-in to generate a context root that does not
-					have the version number on it
-				-->
+				<!-- Configure eclipse plug-in to generate a context root that does not 
+					have the version number on it -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
@@ -49,9 +45,37 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>cuke4duke</groupId>
+				<artifactId>cuke4duke-maven-plugin</artifactId>
+				<version>${cuke4duke.version}</version>
+				<configuration>
+					<jvmArgs>
+						<jvmArg>
+							-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.PicoFactory
+            </jvmArg>
+					</jvmArgs>
+					<cucumberArgs>
+						<cucumberArg>--color</cucumberArg>
+            			<cucumberArg>--require</cucumberArg>
+						<cucumberArg>${project.basedir}/target/test-classes</cucumberArg>
+					</cucumberArgs>
+					<gems>
+						<gem>install cuke4duke --version ${cuke4duke.version}</gem>
+					</gems>
+				</configuration>
+				<executions>
+					<execution>
+						<id>run-features</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>cucumber</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -118,14 +142,14 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
-		    <version>3.0.4.RELEASE</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>3.0.4.RELEASE</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-web</artifactId>
-		    <version>3.0.4.RELEASE</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>3.0.4.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -150,16 +174,82 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>jstl</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<version>7.2.0.v20101020</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>jasper</artifactId>
+			<version>6.0.29</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.webdriver</groupId>
+			<artifactId>webdriver-htmlunit</artifactId>
+			<version>0.9.7376</version>
+		</dependency>
+		<dependency>
+			<groupId>cuke4duke</groupId>
+			<artifactId>cuke4duke</artifactId>
+			<version>${cuke4duke.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.picocontainer</groupId>
+			<artifactId>picocontainer</artifactId>
+			<version>2.8.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.webdriver</groupId>
+			<artifactId>webdriver-firefox</artifactId>
+			<version>0.9.7376</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<properties>
+		<cuke4duke.version>0.4.3</cuke4duke.version>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>jboss</id>
 			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-			<releases><enabled>true</enabled></releases>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>codehaus</id>
+			<url>http://repository.codehaus.org</url>
+		</repository>
+		<repository>
+			<id>cukes</id>
+			<url>http://cukes.info/maven</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>cukes</id>
+			<url>http://cukes.info/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+
 </project>
