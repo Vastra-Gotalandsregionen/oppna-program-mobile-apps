@@ -17,7 +17,7 @@
  *
  */
 
-package se.vgregion.mobile.controllers;
+package se.vgregion.mobile.qr;
 
 import static org.mockito.Mockito.mock;
 
@@ -34,6 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import se.vgregion.mobile.qr.QrController;
 
 
 public class QrControllerTest {

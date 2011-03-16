@@ -31,6 +31,7 @@
 	<mvc:annotation-driven/>
 
 	<context:component-scan base-package="se.vgregion.mobile.controllers" />
+	<context:component-scan base-package="se.vgregion.mobile.qr" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
