@@ -17,7 +17,7 @@
  *
  */
 
-package se.vgregion.mobile.controllers;
+package se.vgregion.mobile.qr;
 
 import java.io.IOException;
 import java.io.OutputStream;

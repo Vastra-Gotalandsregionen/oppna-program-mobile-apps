@@ -27,6 +27,11 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>mobile-mobile-composite-qr</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>mobile-mobile-composite-webcomp</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -203,6 +208,7 @@
   <modules>
     <module>composites/types</module>
     <module>composites/svc</module>
+    <module>composites/qr</module>
     <module>composites/webcomp</module>
     <module>modules/web</module>
   </modules>
