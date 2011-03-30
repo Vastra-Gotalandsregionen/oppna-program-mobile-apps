@@ -35,6 +35,7 @@ import se.vgregion.mobile.services.ErrorReportService;
 import se.vgregion.mobile.services.PrinterService;
 import se.vgregion.mobile.types.ErrorReport;
 import se.vgregion.mobile.types.Printer;
+import se.vgregion.mobile.types.PrinterQueue;
 
 
 public class PrinterControllerTest {
@@ -59,7 +60,8 @@ public class PrinterControllerTest {
 
     @Test
     public void report() throws IOException {
-        Printer p1 = new Printer("p1", "help", "info");
+        PrinterQueue q1 = new PrinterQueue("q1");
+        Printer p1 = new Printer("p1", "help", "info", q1);
         
         PrinterService printerService = mock(PrinterService.class);
         ErrorReportService errorReportService = mock(ErrorReportService.class);
@@ -68,7 +70,7 @@ public class PrinterControllerTest {
         controller.setPrinterService(printerService);
         controller.setErrorReportService(errorReportService);
         
-        ModelAndView mav = controller.report(p1.getId(), "desc", "user");
+        ModelAndView mav = controller.report(p1.getId(), "desc", "user", q1.getId());
         Assert.assertNotNull(mav.getModel().get("notice"));
         
         ArgumentCaptor<ErrorReport> reportCaptor = ArgumentCaptor.forClass(ErrorReport.class);
@@ -77,6 +79,7 @@ public class PrinterControllerTest {
         Assert.assertEquals("desc", reportCaptor.getValue().getDescription());
         Assert.assertEquals("user", reportCaptor.getValue().getReporter());
         Assert.assertEquals(p1, reportCaptor.getValue().getPrinter());
+        Assert.assertEquals(q1, reportCaptor.getValue().getQueue());
     }
 
 }

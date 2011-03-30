@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import se.vgregion.mobile.repository.PrinterRepository;
 import se.vgregion.mobile.types.Printer;
+import se.vgregion.mobile.types.PrinterQueue;
 
 @Service
 public class DemoData {
@@ -37,9 +38,9 @@ public class DemoData {
     
     @PostConstruct
     public void init() {
-        printerRepository.persist(new Printer("HP 700A", LOREM_IPSUM, LOREM_IPSUM));
-        printerRepository.persist(new Printer("HP 700B", LOREM_IPSUM, LOREM_IPSUM));
-        printerRepository.persist(new Printer("HP 700C", LOREM_IPSUM, LOREM_IPSUM));
+        printerRepository.persist(new Printer("HP 700A", LOREM_IPSUM, LOREM_IPSUM, new PrinterQueue("A4"), new PrinterQueue("A3")));
+        printerRepository.persist(new Printer("HP 700B", LOREM_IPSUM, LOREM_IPSUM, new PrinterQueue("A4"), new PrinterQueue("Kuvert")));
+        printerRepository.persist(new Printer("HP 700C", LOREM_IPSUM, LOREM_IPSUM, new PrinterQueue("A4"), new PrinterQueue("Dubbelsidigt")));
     }
     
 }

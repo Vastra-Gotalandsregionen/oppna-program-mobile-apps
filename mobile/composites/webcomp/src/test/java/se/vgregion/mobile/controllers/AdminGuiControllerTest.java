@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import se.vgregion.mobile.services.PrinterService;
 import se.vgregion.mobile.types.Printer;
+import se.vgregion.mobile.types.PrinterQueue;
 
 
 public class AdminGuiControllerTest {
@@ -45,7 +46,7 @@ public class AdminGuiControllerTest {
     public void index() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         
-        Printer p1 = new Printer("p1", "help", "info");
+        Printer p1 = new Printer("p1", "help", "info", new PrinterQueue("A4"));
         List<Printer> printers = Arrays.asList(p1);
         
         PrinterService printerService = mock(PrinterService.class);

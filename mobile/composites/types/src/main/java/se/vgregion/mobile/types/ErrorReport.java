@@ -31,16 +31,19 @@ public class ErrorReport extends AbstractEntity<UUID> {
     
     private Printer printer;
     
+    private PrinterQueue queue;
+    
     private String reporter = "Okänd";
     
     private String description;
     
-    public ErrorReport(Printer printer, String reporter, String description) {
+    public ErrorReport(Printer printer, PrinterQueue queue, String reporter, String description) {
         Assert.notNull(printer);
         Assert.hasText(description);
 
         this.id = UUID.randomUUID();
-        this.printer= printer;
+        this.printer = printer;
+        this.queue = queue;
         this.reporter = reporter;
         this.description = description;
     }
@@ -54,6 +57,10 @@ public class ErrorReport extends AbstractEntity<UUID> {
         return printer;
     }
 
+    public PrinterQueue getQueue() {
+        return queue;
+    }
+    
     public String getReporter() {
         return reporter;
     }

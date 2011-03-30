@@ -37,6 +37,7 @@ import se.vgregion.mobile.services.ErrorReportService;
 import se.vgregion.mobile.services.PrinterService;
 import se.vgregion.mobile.types.ErrorReport;
 import se.vgregion.mobile.types.Printer;
+import se.vgregion.mobile.types.PrinterQueue;
 
 /**
  * Controller for showing a basic web GUI for shorting link.
@@ -71,10 +72,16 @@ public class PrinterController {
     @RequestMapping(value="/printer/{id}/report", method=RequestMethod.POST)
     public ModelAndView report(@PathVariable("id") UUID id, 
             @RequestParam("error") String errorDescription, 
-            @RequestParam("reporter") String reporter) throws IOException {
+            @RequestParam("reporter") String reporter,
+            @RequestParam("queue") UUID queueId) throws IOException {
 
         Printer printer = printerService.findPrinterById(id);
-        ErrorReport report = new ErrorReport(printer, reporter, errorDescription);
+        PrinterQueue queue = null;
+        if(queueId != null) {
+            queue = printer.getQueue(queueId);
+        }
+        
+        ErrorReport report = new ErrorReport(printer, queue, reporter, errorDescription);
         
         errorReportService.report(report);
         

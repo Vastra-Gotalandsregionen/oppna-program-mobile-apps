@@ -19,6 +19,8 @@
 
 package se.vgregion.mobile.types;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.util.Assert;
@@ -34,8 +36,19 @@ public class Printer extends AbstractEntity<UUID> {
     private String help;
     
     private String information;
+
+    private Set<PrinterQueue> queues;
     
-    public Printer(String name, String help, String information) {
+    public Printer(String name, String help, String information, PrinterQueue... queues) {
+        this(name, help, information, (Set<PrinterQueue>)null);
+        
+        this.queues = new HashSet<PrinterQueue>();
+        for(PrinterQueue queue : queues) {
+            this.queues.add(queue);
+        }
+    }
+    
+    public Printer(String name, String help, String information, Set<PrinterQueue> queues) {
         Assert.hasText(name);
         Assert.hasText(help);
         Assert.hasText(information);
@@ -44,6 +57,7 @@ public class Printer extends AbstractEntity<UUID> {
         this.name = name;
         this.help = help;
         this.information = information;
+        this.queues = queues;
     }
 
     @Override
@@ -61,5 +75,17 @@ public class Printer extends AbstractEntity<UUID> {
 
     public String getInformation() {
         return information;
+    }
+    
+    public Set<PrinterQueue> getQueues() {
+        return queues;
+    }
+
+    public PrinterQueue getQueue(UUID id) {
+        for(PrinterQueue queue : queues) {
+            if(queue.getId().equals(id)) return queue;
+        }
+        
+        return null;
     }
 }
