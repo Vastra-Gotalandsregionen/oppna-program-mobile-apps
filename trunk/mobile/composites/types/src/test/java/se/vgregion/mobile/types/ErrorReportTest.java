@@ -19,6 +19,9 @@
 
 package se.vgregion.mobile.types;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,13 +30,17 @@ public class ErrorReportTest {
 
     @Test
     public void cstr() {
-        Printer printer = new Printer("n", "h", "i");
-        ErrorReport report = new ErrorReport(printer, "user", "desc");
+        PrinterQueue queue = new PrinterQueue("q");
+        Set<PrinterQueue> queues = new HashSet<PrinterQueue>();
+        queues.add(queue);
         
-        Assert.assertNotNull(printer.getId());
-        Assert.assertEquals("n", printer.getName());
-        Assert.assertEquals("h", printer.getHelp());
-        Assert.assertEquals("i", printer.getInformation());
+        Printer printer = new Printer("n", "h", "i", queues);
+        ErrorReport report = new ErrorReport(printer, queue, "user", "desc");
+        
+        Assert.assertEquals(printer, report.getPrinter());
+        Assert.assertEquals("desc", report.getDescription());
+        Assert.assertEquals("user", report.getReporter());
+        Assert.assertEquals(queue, report.getQueue());
         
     }
 }

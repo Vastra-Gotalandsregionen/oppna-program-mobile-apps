@@ -77,6 +77,13 @@
 	<div data-role="content" data-theme="b">	
 		<form action="${pageContext.request.contextPath}/printer/${printer.id}/report" method="POST">
 
+		    <p><label for="queue">Skrivarkö</label>
+		    	<select name="queue">
+		    		<c:forEach var="queue" items="${printer.queues}">
+						<option value="${queue.id}">${queue.name}</li>
+					</c:forEach>
+		    	</select>
+		    </p>
 		    <p><label for="error">Beskrivning av fel</label><textarea name="error" id="error"></textarea></p>
 		    <p><label for="reporter">Ditt VGRid (valfri)</label><input name="reporter" id="reporter"></p>
 		    <div class="ui-grid-a">

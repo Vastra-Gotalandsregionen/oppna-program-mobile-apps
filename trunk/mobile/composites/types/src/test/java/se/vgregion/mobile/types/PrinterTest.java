@@ -19,6 +19,10 @@
 
 package se.vgregion.mobile.types;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,12 +31,19 @@ public class PrinterTest {
 
     @Test
     public void cstr() {
-        Printer printer = new Printer("n", "h", "i");
+        PrinterQueue queue = new PrinterQueue("q");
+        Set<PrinterQueue> queues = new HashSet<PrinterQueue>();
+        queues.add(queue);
+
+        Printer printer = new Printer("n", "h", "i", queues);
         
         Assert.assertNotNull(printer.getId());
         Assert.assertEquals("n", printer.getName());
         Assert.assertEquals("h", printer.getHelp());
         Assert.assertEquals("i", printer.getInformation());
+        Assert.assertEquals(queues, printer.getQueues());
+        Assert.assertEquals(queue, printer.getQueue(queue.getId()));
+        Assert.assertNull(printer.getQueue(UUID.randomUUID()));
         
     }
 }
