@@ -64,7 +64,7 @@
 						<gem>install cuke4duke --version ${cuke4duke.version}</gem>
 					</gems>
 				</configuration>
-				<executions>
+<!--				<executions>
 					<execution>
 						<id>run-features</id>
 						<phase>integration-test</phase>
@@ -73,6 +73,7 @@
 						</goals>
 					</execution>
 				</executions>
+-->
 			</plugin>
 		</plugins>
 	</build>

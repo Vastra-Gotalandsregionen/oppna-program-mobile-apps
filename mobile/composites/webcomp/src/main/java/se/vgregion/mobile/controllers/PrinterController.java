@@ -26,12 +26,14 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import se.vgregion.mobile.services.ErrorReportService;
 import se.vgregion.mobile.services.PrinterService;
@@ -60,35 +62,27 @@ public class PrinterController {
     }
 
     @RequestMapping(value="/printer/{id}", method=RequestMethod.GET)
-    public ModelAndView printer(@PathVariable("id") UUID id, @RequestParam(value="notice", required=false) String notice) throws IOException {
-        ModelAndView mav = new ModelAndView("printer");
-        
-        mav.addObject("printer", printerService.findPrinterById(id));
-        mav.addObject("notice", notice);
-        
-        return mav;
+    @ResponseBody
+    public Printer printer(@PathVariable("id") UUID id) throws IOException {
+        return printerService.findPrinterById(id);
     }
 
+    
     @RequestMapping(value="/printer/{id}/report", method=RequestMethod.POST)
-    public ModelAndView report(@PathVariable("id") UUID id, 
-            @RequestParam("error") String errorDescription, 
-            @RequestParam("reporter") String reporter,
-            @RequestParam("queue") UUID queueId) throws IOException {
-
-        Printer printer = printerService.findPrinterById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public void report(@RequestParam("printer") UUID printerId, 
+            @RequestParam(value="queue", required=false) UUID queueId,
+            @RequestParam(value="reporter", required=false) String reporter,
+            @RequestParam("error") String error
+    ) throws IOException {
+        Printer printer = printerService.findPrinterById(printerId);
         PrinterQueue queue = null;
         if(queueId != null) {
-            queue = printer.getQueue(queueId);
+            queue = printerService.findPrinterQueue(printerId, queueId);
         }
-        
-        ErrorReport report = new ErrorReport(printer, queue, reporter, errorDescription);
+        ErrorReport report = new ErrorReport(printer, queue, reporter, error);
         
         errorReportService.report(report);
-        
-        ModelAndView mav = new ModelAndView("redirect:../" + printer.getId());
-        mav.addObject("notice", "Ditt fel har rapporterats");
-        
-        return mav;
     }
 
 

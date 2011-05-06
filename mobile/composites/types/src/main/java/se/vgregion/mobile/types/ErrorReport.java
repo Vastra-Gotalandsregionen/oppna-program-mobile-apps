@@ -37,6 +37,11 @@ public class ErrorReport extends AbstractEntity<UUID> {
     
     private String description;
     
+    // Used by JPA
+    protected ErrorReport() {
+        
+    }
+    
     public ErrorReport(Printer printer, PrinterQueue queue, String reporter, String description) {
         Assert.notNull(printer);
         Assert.hasText(description);

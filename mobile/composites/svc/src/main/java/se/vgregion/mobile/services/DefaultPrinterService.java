@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import se.vgregion.mobile.repository.PrinterRepository;
 import se.vgregion.mobile.types.Printer;
+import se.vgregion.mobile.types.PrinterQueue;
 
 @Service
 public class DefaultPrinterService implements PrinterService {
@@ -48,5 +49,15 @@ public class DefaultPrinterService implements PrinterService {
     public Collection<Printer> findAllPrinters() {
         return printerRepository.findAll();
     }
-    
+
+    @Override
+    public PrinterQueue findPrinterQueue(UUID printerId, UUID queueId) {
+        Printer printer = findPrinterById(printerId);
+        
+        if(printer != null) {
+            return printer.getQueue(queueId);
+        } else {
+            return null;
+        }
+    }
 }
