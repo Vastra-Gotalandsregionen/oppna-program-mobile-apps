@@ -17,20 +17,33 @@
  *
  */
 
-package se.vgregion.mobile.services;
+package se.vgregion.mobile.types;
 
-import java.util.Collection;
 import java.util.UUID;
 
-import se.vgregion.mobile.types.Printer;
-import se.vgregion.mobile.types.PrinterQueue;
+import org.springframework.util.Assert;
 
+import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
 
-public interface PrinterService {
+public class PrinterQueue extends AbstractEntity<UUID> {
 
-    Collection<Printer> findAllPrinters();
-    Printer findPrinterById(UUID id);
+    private UUID id;
     
-    PrinterQueue findPrinterQueue(UUID printer, UUID queueId);
+    private String name;
+    
+    public PrinterQueue(String name) {
+        Assert.hasText(name);
 
+        this.id = UUID.randomUUID();
+        this.name = name;
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
 }

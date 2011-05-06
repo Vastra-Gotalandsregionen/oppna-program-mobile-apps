@@ -8,10 +8,10 @@
 		
 		<link rel="shortcut icon" href="http://www.vgregion.se/VGRimages/favicon.ico" type="image/x-icon" />
 		
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reset.css" type="text/css" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/typography.css" type="text/css" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/forms.css" type="text/css" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/urlservice.css" type="text/css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/api/resources/css/reset.css" type="text/css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/api/resources/css/typography.css" type="text/css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/api/resources/css/forms.css" type="text/css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/api/resources/css/urlservice.css" type="text/css" />
 
 	</head>
 	<body>
@@ -31,8 +31,8 @@
 				<c:forEach var="printer" items="${printers}">
 					<tr class="printer">
 						<td>${printer.name}</td>
-						<td><a href="${pageContext.request.contextPath}/printer/${printer.id}">Visa</a></td>
-						<td><a class="qr" href="${pageContext.request.contextPath}/qr?url=${appurl}/printer/${printer.id}">QR</a></td>
+						<td><a href="${pageContext.request.contextPath}/printer.html?printer=${printer.id}">Visa</a></td>
+						<td><a class="qr" href="${pageContext.request.contextPath}/api/qr?url=${appurl}/printer/${printer.id}">QR</a></td>
 					</tr>
 				</c:forEach>
 					<tr>

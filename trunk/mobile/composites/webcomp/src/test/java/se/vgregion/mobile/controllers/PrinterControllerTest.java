@@ -53,9 +53,8 @@ public class PrinterControllerTest {
         Mockito.when(printerService.findPrinterById(p1.getId())).thenReturn(p1);
         controller.setPrinterService(printerService);
         
-        ModelAndView mav = controller.printer(p1.getId(), "note");
-        Assert.assertEquals(p1, mav.getModel().get("printer"));
-        Assert.assertEquals("note", mav.getModel().get("notice"));
+        Printer actual = controller.printer(p1.getId());
+        Assert.assertEquals(p1, actual);
     }
 
     @Test
@@ -67,11 +66,11 @@ public class PrinterControllerTest {
         ErrorReportService errorReportService = mock(ErrorReportService.class);
         
         Mockito.when(printerService.findPrinterById(p1.getId())).thenReturn(p1);
+        Mockito.when(printerService.findPrinterQueue(p1.getId(), q1.getId())).thenReturn(q1);
         controller.setPrinterService(printerService);
         controller.setErrorReportService(errorReportService);
         
-        ModelAndView mav = controller.report(p1.getId(), "desc", "user", q1.getId());
-        Assert.assertNotNull(mav.getModel().get("notice"));
+        controller.report(p1.getId(), q1.getId(), "user", "desc");
         
         ArgumentCaptor<ErrorReport> reportCaptor = ArgumentCaptor.forClass(ErrorReport.class);
         Mockito.verify(errorReportService).report(reportCaptor.capture());
