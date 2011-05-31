@@ -17,40 +17,11 @@
  *
  */
 
-package se.vgregion.mobile.types;
+package se.vgregion.mobile.services;
 
-import org.springframework.util.Assert;
+import org.apache.http.client.HttpClient;
 
-import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+public interface HttpClientFactory {
 
-public class Facility extends AbstractEntity<String> {
-
-    private String id;
-    
-    private String name;
-    
-    private Position position;
-    
-    public Facility(String id, String name, Position position) {
-    	Assert.hasText(id);
-        Assert.hasText(name);
-        Assert.notNull(position);
-
-        this.id = id;
-        this.name = name;
-        this.position = position;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
+    HttpClient getClient();
 }
