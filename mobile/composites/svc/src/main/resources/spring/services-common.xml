@@ -27,8 +27,10 @@
 	
 	<bean class="se.vgregion.mobile.services.DefaultPrinterService" />
 	<bean class="se.vgregion.mobile.services.SystemOutErrorReportService" />
-	<bean class="se.vgregion.mobile.services.DefaultFacilityService" />
 	
+	<bean class="se.vgregion.mobile.services.SambaFacilityService">
+		<property name="http://sambo.vgregion.se/vgrSambo2.nsf/getresources.xml?openagent"></property>
+	</bean>
 	
 	<bean class="se.vgregion.mobile.services.DemoData" />
 	

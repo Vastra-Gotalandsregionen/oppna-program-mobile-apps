@@ -17,40 +17,22 @@
  *
  */
 
-package se.vgregion.mobile.types;
+package se.vgregion.mobile.services;
 
-import org.springframework.util.Assert;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 
-import se.vgregion.dao.domain.patterns.entity.AbstractEntity;
+public class DefaultHttpClientFactory implements HttpClientFactory {
 
-public class Facility extends AbstractEntity<String> {
+	@Override
+	public HttpClient getClient() {
+        DefaultHttpClient client = new DefaultHttpClient();
+        //ConnManagerParams.setMaxTotalConnections(client.getParams(), 100);
+        HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000);
+        HttpConnectionParams.setSoTimeout(client.getParams(), 10000);
+        
+        return client;
+	}
 
-    private String id;
-    
-    private String name;
-    
-    private Position position;
-    
-    public Facility(String id, String name, Position position) {
-    	Assert.hasText(id);
-        Assert.hasText(name);
-        Assert.notNull(position);
-
-        this.id = id;
-        this.name = name;
-        this.position = position;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
 }

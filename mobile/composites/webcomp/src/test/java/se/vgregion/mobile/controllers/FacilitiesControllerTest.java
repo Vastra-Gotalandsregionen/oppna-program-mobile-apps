@@ -28,17 +28,12 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.vgregion.mobile.services.ErrorReportService;
 import se.vgregion.mobile.services.FacilityService;
-import se.vgregion.mobile.services.PrinterService;
-import se.vgregion.mobile.types.ErrorReport;
 import se.vgregion.mobile.types.Facility;
 import se.vgregion.mobile.types.Position;
-import se.vgregion.mobile.types.Printer;
 
 
 public class FacilitiesControllerTest {
@@ -49,8 +44,8 @@ public class FacilitiesControllerTest {
 
     @Before
     public void before() {
-        Facility f1 = new Facility("fac1", new Position(1, 2));
-        Facility f2 = new Facility("fac2", new Position(3, 4));
+        Facility f1 = new Facility("id1", "fac1", new Position(1, 2));
+        Facility f2 = new Facility("id2", "fac2", new Position(3, 4));
         
         facilities = Arrays.asList(f1, f2);
         

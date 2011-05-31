@@ -30,16 +30,16 @@ import se.vgregion.mobile.types.Facility;
 import se.vgregion.mobile.types.Position;
 
 @Service
-public class DefaultFacilityService implements FacilityService {
+public class MockFacilityService implements FacilityService {
 
-    private final Logger log = LoggerFactory.getLogger(DefaultFacilityService.class);
+    private final Logger log = LoggerFactory.getLogger(MockFacilityService.class);
 
     private static List<Facility> MOCK_FACILITIES = new ArrayList<Facility>();
     static {
-        MOCK_FACILITIES.add(new Facility("Vipan", new Position(57.6095426, 12.07527)));
-        MOCK_FACILITIES.add(new Facility("Ärlan", new Position(57.6095424, 12.07529)));
-        MOCK_FACILITIES.add(new Facility("Trasten", new Position(56.6095426, 13.07527)));
-        MOCK_FACILITIES.add(new Facility("Göken", new Position(58.6095426, 11.07527)));
+        MOCK_FACILITIES.add(new Facility("id1", "Vipan", new Position(57.6095426, 12.07527)));
+        MOCK_FACILITIES.add(new Facility("id2", "Ärlan", new Position(57.6095424, 12.07529)));
+        MOCK_FACILITIES.add(new Facility("id3", "Trasten", new Position(56.6095426, 13.07527)));
+        MOCK_FACILITIES.add(new Facility("id4", "Göken", new Position(58.6095426, 11.07527)));
     }
 
     @Override
