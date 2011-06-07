@@ -26,6 +26,7 @@ import java.util.List;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
+import nu.xom.Elements;
 import nu.xom.Nodes;
 
 import org.apache.http.HttpResponse;
@@ -61,15 +62,24 @@ public class SambaFacilityService implements FacilityService {
 				Builder builder = new Builder();
 				Document doc = builder.build(response.getEntity().getContent());
 				
+				String status = doc.query("/response/status").get(0).getValue();
+				
+				if(!status.equals("Success")) {
+					throw new RuntimeException("Status is not Success as expected: " + status);
+				}
+				
 				List<Facility> facilities = new ArrayList<Facility>();
 				Nodes resources = doc.query("/response/resource");
 				for(int i = 0; i<resources.size(); i++) {
 					Element resource = (Element) resources.get(i);
-					String place = resource.getChildElements("place").get(0).getValue();
-					String name = resource.getChildElements("name").get(0).getValue();
+					String place = getValue(resource.getChildElements("place"));
+					String name = getValue(resource.getChildElements("name"));
 					String id = place + ":" + name;
 					
-					facilities.add(new Facility(id, name, position));
+					Double latitude = getDoubleValue(resource.getChildElements("latitude"));
+					Double longitude = getDoubleValue(resource.getChildElements("longitude"));
+					
+					facilities.add(new Facility(id, name, new Position(latitude, longitude)));
 				}
 				
 				return facilities;
@@ -83,8 +93,25 @@ public class SambaFacilityService implements FacilityService {
 		} finally {
 			HttpUtil.closeQuitely(response);
 		}
-        
     }
+    
+    private String getValue(Elements elements) {
+    	if(elements.size() == 1) {
+    		return elements.get(0).getValue();
+    	} else {
+    		throw new RuntimeException("Invalid XML");
+    	}
+    }
+
+    private Double getDoubleValue(Elements elements) {
+    	String s = getValue(elements);
+    	try {
+    		return Double.valueOf(s);
+    	} catch(NumberFormatException e) {
+    		throw new RuntimeException("Invalid XML", e);
+    	}
+    }
+
     
 	public URI getSambaBaseUrl() {
 		return sambaBaseUrl;
