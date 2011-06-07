@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -76,12 +75,20 @@ public class SambaFacilitiesServiceTest {
 		when(httpEntity.getContent()).thenReturn(new FileInputStream("src/test/resources/samba1.xml"));
 		
 		List<Facility> actual = facilityService.findNearbyFacilities(pos);
-		List<Facility> expected = Arrays.asList(
-				new Facility("RH-Gbg-Lillhagen:Fullriggaren 28", "Fullriggaren 28", pos),
-				new Facility("RH-Gbg-Lillhagen:Barken 22", "Barken 22", pos)
-		);
+
+		Facility expected0 = new Facility("RH-Gbg-Lillhagen:Fullriggaren 28", "Fullriggaren 28", new Position(57.680027, 11.9622548));
+		Facility expected1 = new Facility("RH-Gbg-Lillhagen:Barken 22", "Barken 22", new Position(57.6678453, 12.0185926));
 		
-		Assert.assertEquals(expected, actual);
+		Facility actual0 = actual.get(0);
+		Facility actual1 = actual.get(1);
+		
+		Assert.assertEquals(expected0.getId(), 			actual0.getId());
+		Assert.assertEquals(expected0.getName(), 		actual0.getName());
+		Assert.assertEquals(expected0.getPosition(), 	actual0.getPosition());
+
+		Assert.assertEquals(expected1.getId(), 			actual1.getId());
+		Assert.assertEquals(expected1.getName(), 		actual1.getName());
+		Assert.assertEquals(expected1.getPosition(), 	actual1.getPosition());
 	}
 
 	@Test
@@ -101,6 +108,13 @@ public class SambaFacilitiesServiceTest {
 		facilityService.findNearbyFacilities(pos);
 	}
 
+	@Test(expected=RuntimeException.class)
+	public void testDocumentStatus() throws Exception {
+		when(httpEntity.getContent()).thenReturn(new FileInputStream("src/test/resources/samba3.xml"));
+		
+		facilityService.findNearbyFacilities(pos);
+	}
+	
 	@Test(expected=RuntimeException.class)
 	public void testIoException() throws Exception {
 		when(httpClient.execute(Mockito.any(HttpUriRequest.class))).thenThrow(new IOException());

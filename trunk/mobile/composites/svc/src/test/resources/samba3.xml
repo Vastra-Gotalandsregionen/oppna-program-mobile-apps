@@ -10,22 +10,6 @@
 	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA -->
 
 <response timestamp="Tue May 31 08:40:12 CEST 2011">
-	<status>Success</status>
-	<message>Found 2 resources</message>
-	<resource>
-		<place>RH-Gbg-Lillhagen</place>
-		<name>Fullriggaren 28</name>
-		<capacity>28</capacity>
-		<type>Room</type>
-		<latitude>57.680027</latitude>
-		<longitude>11.9622548</longitude>
-	</resource>
-	<resource>
-		<place>RH-Gbg-Lillhagen</place>
-		<name>Barken 22</name>
-		<capacity>22</capacity>
-		<type>Room</type>
-		<latitude>57.6678453</latitude>
-		<longitude>12.0185926</longitude>
-	</resource>
+	<status>Error</status>
+	<message>Found 0 resources</message>
 </response>
