@@ -67,6 +67,7 @@ public class FacilitiesController {
         Position position = new Position(latitude, longitude);
         
         List<Facility> facilities = facilityService.findNearbyFacilities(position);
+        
         return facilities;
     }
 
