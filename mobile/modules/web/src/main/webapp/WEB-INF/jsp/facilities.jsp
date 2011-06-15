@@ -10,10 +10,12 @@
 		<link rel="apple-touch-icon" href="http://www.vgregion.se/VGRimages/favicon.ico" type="image/x-icon" />
 		<link rel="apple-touch-icon-precomposed" href="http://www.vgregion.se/VGRimages/favicon.ico" type="image/x-icon" />
 		
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mobile-1.0a1.min.css" />
-		<script src="${pageContext.request.contextPath}/resources/js/jquery-1.4.4.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/jquery.mobile-1.0a1.min.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/bookmark-bubble.js"></script>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/app/resources/css/jquery.mobile-1.0a1.min.css" />
+		<script src="${pageContext.request.contextPath}/app/resources/js/jquery-1.4.4.js"></script>
+		<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+		<script src="${pageContext.request.contextPath}/app/resources/js/bookmark-bubble.js"></script>
+		
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -21,16 +23,23 @@
 		<script>
 
 		function success(pos) {
+		    console.log(pos)
 			$.ajax({
 			  url: "facilities/near/" + pos.coords.latitude + "/" + pos.coords.longitude,
 			  success: function(data) {
+			    $('#result').empty()
+			    var map = showMap(pos)
+			    
 			    $(data).each(function(index, facility) {
 			    	var elm = $("<div />")
 			    	elm.text(facility.name)
-			    	$('#result').append(elm)	
+			    	$('#result').append(elm)
+			    	
+			    	showRoomOnMap(map, facility.position, facility.name) 
 			    })
 			    
 			    $("#waiting").hide()
+			    $("#search").hide()
 			  },
 			  error: function(er) {
 			  	$("#waiting").hide()
@@ -40,10 +49,29 @@
 
 		}
 		
+		function showMap(pos) {
+			var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+  			var myOptions = {
+    			zoom: 12,
+    			center: myLatlng,
+    			mapTypeId: google.maps.MapTypeId.ROADMAP
+  			}
+  			var map = new google.maps.Map(document.getElementById("map"), myOptions)
+    		return map
+		}
+		
+		function showRoomOnMap(map, pos, name) {
+		console.log(name)
+  			var marker = new google.maps.Marker({
+      			position: new google.maps.LatLng(pos.latitude, pos.longitude), 
+      			map: map, 
+      			title: name
+  			})
+		
+		}
+		
 		function error(er) {
 			$("#waiting").hide()
-			alert(er.code)
-			alert(er.message)
 			alert("Kunde inte lokalisera dig, försök igen senare")
 		}
 
@@ -51,7 +79,7 @@
 			$("#search").click(function(event) {
 				event.preventDefault()
 				navigator.geolocation.getCurrentPosition(success, error);
-				//$("#waiting").show()
+				$("#waiting").show()
 			})
 			
 			window.setTimeout(function() {
@@ -63,6 +91,7 @@
 
 		    	bubble.showIfAllowed()
 			  }, 1000)
+			  
 		})
 		</script>
 
@@ -80,10 +109,12 @@
 		<h2>Sök resurs nära dig</h2>
 		<p><a id="search" href="#">Konferensrum</a></p>
 
-		<img id="waiting" src="resources/img/ajax-loader.gif" style="display:nonex" />
+		<img id="waiting" src="resources/img/ajax-loader.gif" style="display:none" />
 
-		<div id="result">
-		</div>
+		<div id="map" style="width:100%; height:400px; margin-bottom: 15px"></div>
+		
+		<div id="result"></div>
+		
 	</div>
 </div>
 

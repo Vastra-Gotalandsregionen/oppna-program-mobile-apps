@@ -29,7 +29,7 @@
 	<bean class="se.vgregion.mobile.services.SystemOutErrorReportService" />
 	
 	<bean class="se.vgregion.mobile.services.SambaFacilityService">
-		<property name="http://sambo.vgregion.se/vgrSambo2.nsf/getresources.xml?openagent"></property>
+		<property name="sambaBaseUrl" value="http://sambo.vgregion.se/vgrSambo2.nsf/getresources.xml?openagent" />
 	</bean>
 	
 	<bean class="se.vgregion.mobile.services.DemoData" />

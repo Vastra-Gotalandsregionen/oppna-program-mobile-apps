@@ -27,30 +27,33 @@
 		})(jQuery);
 		
 		// TODO make configurable
-		var apiUrl = "http://localhost:8080/api/"
+		var apiUrl = "http://localhost:8080/app/"
 		
 		$(function() {
 		    var printer = $.QueryString["printer"]
 		    
 			$.getJSON(apiUrl + 'printer/' + printer, function(data) {
-			  console.log(data)
-			  $("#printer").val(data.id)
-			  $("#printername").html(data.name)
-			  $("#helptext").html(data.help)
-			  $("#infotext").html(data.information)
-			  
-			  $(data.queues).each(function(index, queue) {
-			    if(index == 0) {
-			    	var option = $("<option selected='selected'></option>")
-			    } else {
-			    	var option = $("<option></option>")
-			    }
-			    option
-			  		.attr("value", queue.id)
-			  		.text(queue.name)
-			     
-			  	$("#queue").append(option)
-			  })
+			  if(data) {
+				  $("#printer").val(data.id)
+				  $("#printername").html(data.name)
+				  $("#helptext").html(data.help)
+				  $("#infotext").html(data.information)
+				  
+				  $(data.queues).each(function(index, queue) {
+				    if(index == 0) {
+				    	var option = $("<option selected='selected'></option>")
+				    } else {
+				    	var option = $("<option></option>")
+				    }
+				    option
+				  		.attr("value", queue.id)
+				  		.text(queue.name)
+				     
+				  	$("#queue").append(option)
+				  })
+				} else {
+				  alert("Okänd skrivare")
+				}
 			});
 
 			$("#reportform").submit(function() {

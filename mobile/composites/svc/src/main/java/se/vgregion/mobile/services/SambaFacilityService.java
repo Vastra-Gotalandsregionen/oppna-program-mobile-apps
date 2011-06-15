@@ -49,19 +49,20 @@ public class SambaFacilityService implements FacilityService {
         	throw new RuntimeException("Missing configuration for SAMBA base URL");
         }
 
-        String urlTemplate = sambaBaseUrl.toString() + "&latitude=%f&longitude=%f&distance=10";
-        String fullUrl = String.format(urlTemplate, position.getLatitude(), position.getLongitude()); 
+        String urlTemplate = sambaBaseUrl.toString() + "&latitude=%f&longitude=%f&distance=100";
+        String fullUrl = String.format(urlTemplate, position.getLatitude(), position.getLongitude());
+
         HttpGet get = new HttpGet(fullUrl);
         
         HttpResponse response = null;
         try {
         	HttpClient client = httpClientFactory.getClient();
 			response = client.execute(get);
-			
+
 			if(HttpUtil.successStatus(response)) {
 				Builder builder = new Builder();
 				Document doc = builder.build(response.getEntity().getContent());
-				
+
 				String status = doc.query("/response/status").get(0).getValue();
 				
 				if(!status.equals("Success")) {
@@ -69,7 +70,7 @@ public class SambaFacilityService implements FacilityService {
 				}
 				
 				List<Facility> facilities = new ArrayList<Facility>();
-				Nodes resources = doc.query("/response/resource");
+				Nodes resources = doc.query("/response/resource[type='Room']'");
 				for(int i = 0; i<resources.size(); i++) {
 					Element resource = (Element) resources.get(i);
 					String place = getValue(resource.getChildElements("place"));
