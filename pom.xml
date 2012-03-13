@@ -10,7 +10,7 @@
   <groupId>se.vgregion.mobile</groupId>
   <artifactId>mobile-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>${project.artifactId}</name>
 
   <modules>
@@ -18,8 +18,8 @@
   </modules>
 
   <scm>
-    <developerConnection>scm:svn:https://oppna-program-mobile-apps.googlecode.com/svn/tags/mobile-system-1.0</developerConnection>
-    <url>http://oppna-program-mobile-apps.googlecode.com/svn/tags/mobile-system-1.0</url>
+    <developerConnection>scm:svn:https://oppna-program-mobile-apps.googlecode.com/svn/trunk</developerConnection>
+    <url>http://oppna-program-mobile-apps.googlecode.com/svn/trunk</url>
   </scm>
 
 </project>
