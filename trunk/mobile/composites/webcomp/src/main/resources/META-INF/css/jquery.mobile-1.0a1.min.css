@@ -1,4 +1,4 @@
-/*!
+/**
  * jQuery Mobile
  * http://jquerymobile.com/
  *
