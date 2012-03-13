@@ -1,0 +1,55 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ */
+body { 
+	margin:10px; 
+}
+
+label {
+	width: 100px;
+	display: block;
+	float: left;
+}
+
+    input {
+    	width: 300px;
+        border: 1px solid black;
+    }
+    
+    .tags {
+        border: 1px solid black;
+        padding: 1px;
+        overflow: auto;
+    }
+
+    .tags span {
+        background-color: #ccc;
+        padding-left: 1px;
+        padding-right: 1px;
+        margin-right: 5px;
+    }
+
+    .tags span.x {
+        cursor: pointer;
+        padding-left: 3px;
+    }
+
+    
+    .tags input {
+        border: 1px solid #eee;
+        width: 50px;
+    }

@@ -1,0 +1,43 @@
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+<!--	<http auto-config='true'>-->
+<!--		<intercept-url pattern="/resources/**" filters="none" />-->
+<!--		<intercept-url pattern="/favicon.ico" filters="none" />-->
+<!--		<intercept-url pattern="/b/new" access="ROLE_USER"  />-->
+<!--		<intercept-url pattern="/u/*/*/edit" access="ROLE_USER"  />-->
+<!--		<form-login default-target-url="/shorten" />-->
+<!--		<logout logout-success-url="/shorten" logout-url="/logout"/>-->
+<!--	</http>-->
+<!---->
+<!--	<authentication-manager>-->
+<!--		<authentication-provider>-->
+<!--			<user-service>-->
+<!--				<user name="roblu" password="password" authorities="ROLE_USER" />-->
+<!--			</user-service>-->
+<!--		</authentication-provider>-->
+<!--	</authentication-manager>-->
+</beans:beans>
